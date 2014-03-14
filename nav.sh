@@ -10,6 +10,31 @@ while [  1 > 0 ]; do
 BACK 4
 
 "
-    read KEYCODE
-    `adb shell input keyevent $KEYCODE`
+    read KEY
+    case $KEY in
+	#UP
+	'^[[1;5A')
+	`adb shell input keyevent 19`
+	;;
+	#DOWN
+	'^[[1;5B')
+	`adb shell input keyevent 20`
+	;;
+	#RIGHT
+	'^[[1;5C')
+	`adb shell input keyevent 22`
+	;;
+	#LEFT
+	'^[[1;5D')
+	`adb shell input keyevent 21`
+	;;
+	#CENTER
+	'+')
+	`adb shell input keyevent 23`
+	;;
+	#ESC
+	'-')
+	`adb shell input keyevent 4`
+	;;
+    esac
 done
