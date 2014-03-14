@@ -1,0 +1,42 @@
+#!/bin/bash
+
+set -x
+set -e
+export PATH=$PATH:~/bin/
+
+echo "ADB(A) or FASTBOOT(F)"
+read af 
+#read -p "ADB(A) or FASTBOOT(F)"
+case $af in
+    [Aa]*)
+      adb devices
+      adb reboot bootloader
+    ;;
+    [Bb]*)
+     sudo fastboot devices
+    ;;
+esac
+#adb devices
+#sudo adb reboot bootloader
+sleep 5
+
+sudo fastboot devices
+sudo fastboot oem format
+
+#if [ -f recovery.img ]
+#then 
+#    while true; do
+#    read -p "Flash recovery?" yn
+#    case $yn in
+#        [Yy]* ) sudo fastboot flash recovery ./recovery.img; break;;
+#        [Nn]* ) exit;;
+#        * ) echo "Please answer yes or no.";;
+#    esac
+#done
+#sudo fastboot flash recovery ./recovery*.img
+sudo fastboot flash boot ./boot*.img
+sudo fastboot flash system ./system*.img
+sudo fastboot flash userdata ./userdata*.img
+sudo fastboot reboot
+echo -e "\DONE\n"
+
